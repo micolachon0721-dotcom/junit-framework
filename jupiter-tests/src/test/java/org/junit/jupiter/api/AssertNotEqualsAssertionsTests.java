@@ -624,6 +624,17 @@ class AssertNotEqualsAssertionsTests {
 
 	}
 
+	@Nested
+	class AssertNotEqualsArrays {
+		@Test
+		void objects() {
+			Object object = new Object();
+			Object array1 = new Object[] { object };
+			Object array2 = new Object[] { object };
+			assertNotEquals(array1, array2);
+		}
+	}
+
 	// -------------------------------------------------------------------------
 
 	@Nested

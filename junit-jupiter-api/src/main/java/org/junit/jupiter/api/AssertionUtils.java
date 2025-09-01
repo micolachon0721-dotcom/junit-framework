@@ -114,6 +114,9 @@ class AssertionUtils {
 		if (obj1 == null) {
 			return (obj2 == null);
 		}
+		//		if (obj1.getClass().isArray() && (obj2 != null && obj2.getClass().isArray())) {
+		//			throw new AssertionError("Should have used `assertArrayEquals()?!`");
+		//		}
 		return obj1.equals(obj2);
 	}
 
