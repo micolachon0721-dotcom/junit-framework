@@ -17,9 +17,14 @@ import static org.junit.jupiter.api.AssertionTestUtils.assertMessageMatches;
 import static org.junit.jupiter.api.AssertionTestUtils.assertMessageStartsWith;
 import static org.junit.jupiter.api.AssertionTestUtils.expectAssertionFailedError;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.logging.LogRecord;
+
+import org.junit.jupiter.api.fixtures.TrackLogRecords;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.platform.commons.logging.LogRecordListener;
 import org.opentest4j.AssertionFailedError;
 
 /**
@@ -754,7 +759,7 @@ class AssertEqualsAssertionsTests {
 	@Nested
 	class ArraysAsArguments {
 		@Test
-		void objects() {
+		void objects(@TrackLogRecords LogRecordListener listener) {
 			Object object = new Object();
 			Object array1 = new Object[] { object };
 			Object array2 = new Object[] { object };
@@ -766,13 +771,17 @@ class AssertEqualsAssertionsTests {
 				assertMessageMatches(ex, "expected: " + //
 						"\\Q[Ljava.lang.Object;@\\E" + //
 						".+" + //
-						"\\Q<[java.lang.Object@\\E.+" + //
+						"\\Q<[java.lang.Object@\\E" + //
+						".+" + //
 						"\\Q]> but was: [Ljava.lang.Object;@\\E" + //
 						".+" + //
 						"\\Q<[java.lang.Object@\\E" + //
 						".+" + //
 						"\\Q]>\\E");
 			}
+			assertLinesMatch("""
+					Should have used `assertArrayEquals()` in method: <TODO>
+					""".lines(), listener.stream(AssertionUtils.class).map(LogRecord::getMessage));
 		}
 	}
 
