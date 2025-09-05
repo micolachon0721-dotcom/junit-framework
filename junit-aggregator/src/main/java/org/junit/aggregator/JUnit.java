@@ -21,6 +21,7 @@ import java.util.function.UnaryOperator;
 import java.util.spi.ToolProvider;
 
 import org.apiguardian.api.API;
+import org.junit.jupiter.api.Assertions;
 import org.junit.platform.commons.JUnitException;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
@@ -28,7 +29,7 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 
 @API(status = EXPERIMENTAL, since = "6.0")
-public final class JUnit {
+public final class JUnit extends Assertions {
 
 	private JUnit() {
 	}
